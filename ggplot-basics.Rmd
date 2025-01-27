@@ -1,11 +1,12 @@
 ---
 title: "Overview of basic features of ggplot"
-author: "Caleb Trujillo"
+author: "Mia Keane"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load(tidyverse,nycflights13,gapminder,socviz)
 ```
@@ -15,12 +16,20 @@ pacman::p_load(tidyverse,nycflights13,gapminder,socviz)
 Here you will make your figure. You can write a commit for each figure or error leading up to the figure that matches. Be sure to include commits of the transitions and name the figures such as "Recreating Figure 3.4" and "Recreating Figure 3.7". Practicing frequent commits is a great habit.
 
 ```{r 3.13 plot}
+library(gapminder)
 
-p <- ggplot(data = gapminder,
-            mapping = aes(x = gdpPercap,
-                          y = lifeExp))
-p + geom_point() 
-
+p <- ggplot(data = gapminder, mapping = aes(x = gdpPercap, y=lifeExp))
+p + geom_point(alpha = 0.3) +
+    geom_smooth(method = "lm") +
+    scale_x_log10(labels = scales::dollar) +
+    labs(x = "GDP Per Capita", y = "Life Expectancy in Years",
+         title = "Economic Growth and Life Expectancy",
+         subtitle = "Data points are country-years",
+         caption = "Source: Gapminder.") +
+   theme(
+        axis.title.x = element_text(hjust = 1, vjust = 1), 
+        axis.title.y = element_text(hjust = 1, vjust = 1) 
+    )
 ```
 
 ### Figure 3.16
@@ -28,11 +37,24 @@ p + geom_point()
 Here you will make your next figure.
 
 ```{r 3.16 plot}
-p <- ggplot(data = gapminder,
-            mapping = aes(x = gdpPercap,
-                          y = lifeExp,
-                          color = continent,
-                          fill = lifeExp))
-p + geom_smooth()
+p <- ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))
+p + geom_point(mapping = aes(color = continent)) +
+    geom_smooth(method = "loess") +
+    scale_x_log10() +
+    theme(
+        axis.title.x = element_text(hjust = 1, vjust = 1), 
+        axis.title.y = element_text(hjust = 1, vjust = 1) 
+        )
 ```
 
+##Original Graph
+
+```{r Original Graph}
+
+p <- ggplot(data = cars, aes(x=speed, y= dist)) 
+p + geom_point() +
+  geom_smooth(methos = "lm") +
+  labs(title = "Car speeds vs their stopping distance",
+       x = "Speed (mph)",
+       y = "Cars stopping distance (ft)")
+```
