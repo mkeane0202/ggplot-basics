@@ -6,7 +6,6 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 pacman::p_load(tidyverse,nycflights13,gapminder,socviz)
 ```
